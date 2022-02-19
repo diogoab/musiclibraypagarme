@@ -1,0 +1,19 @@
+FROM python:3.8-slim as builder
+COPY . /src
+RUN pip install --user fastapi uvicorn boto3 flask awscli
+
+FROM python:3.8-slim as app
+COPY --from=builder /root/.local /root/.local
+COPY --from=builder /src .
+
+ARG REGION=us-east-1
+ARG AWS_ACCESS_KEY=0
+ARG AWS_SECRET_ACCESS_KEY=0
+
+RUN mkdir /root/.aws && echo "[default]\nregion = ${REGION}\noutput = json" > /root/.aws/config && echo "[default]\naws_access_key_id = ${AWS_ACCESS_KEY}\naws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" > /root/.aws/credentials
+RUN cat /root/.aws/*
+
+ENV PATH=/root/.local:$PATH
+EXPOSE 5000
+
+CMD ["python3", "app.py"]
