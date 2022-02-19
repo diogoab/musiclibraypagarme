@@ -84,7 +84,7 @@ jobs:
       id: apply
       run: |
         cd terraform
-        terraform apply --auto-approve -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}"
+        terraform apply --auto-approve -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}" -lock=false
 
     #- name: Terraform Destroy
     #  id: destroy
