@@ -80,8 +80,14 @@ jobs:
         cd terraform
         terraform plan -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}"
     
-    - name: Terraform Apply
-      id: apply
+    #- name: Terraform Apply
+    #  id: apply
+    #  run: |
+    #    cd terraform
+    #    terraform apply --auto-approve -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}"
+
+    - name: Terraform Destroy
+      id: destroy
       run: |
         cd terraform
-        terraform apply --auto-approve -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}"
+        terraform destroy --auto-approve 
