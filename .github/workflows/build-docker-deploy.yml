@@ -78,7 +78,7 @@ jobs:
       id: plan
       run: |
         cd terraform
-        terraform plan -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}"
+        terraform plan -no-color -var="ecs_image_url=${{ steps.build-image.outputs.image }}" -lock=false
     
     #- name: Terraform Apply
     #  id: apply
