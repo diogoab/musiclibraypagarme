@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
   pull_request:
     branches: [ main ]
 
@@ -15,8 +15,6 @@ env:
   AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
   
-
-
 jobs:
   deploy:
     name: Deploy
