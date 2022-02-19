@@ -6,10 +6,25 @@ on:
 
 name: Projeto `MusicLibraryPagarMe` CI-ECR
 
+defaults:
+  run:
+    shell: bash
+
+env:
+  AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  
+
+
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: develop
+    permissions:
+      packages: write
+      contents: read
 
     steps:
     - name: Checkout
@@ -20,7 +35,15 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Create ECR_REPOSITORY
+      run: |
+        aws ecr describe-repositories --repository-names ${{ secrets.REPO_NAME }} \
+                                      --region ${{ secrets.AWS_REGION }} 2>&1 > /dev/null || aws ecr create-repository \
+                --repository-name ${{ secrets.REPO_NAME }} \
+                --region ${{ secrets.AWS_REGION }} \
+                --tags '[{"Key":"env","Value":"dev"},{"Key":"team","Value":"devops"}]'
 
     - name: Login na Amazon ECR
       id: login-ecr
@@ -36,5 +59,6 @@ jobs:
         # Faz o build da image docker container e push para ECR 
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "Pushing image para ECR..."
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
