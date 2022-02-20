@@ -3,7 +3,7 @@
 ### Esse projeto tem como objetivo, criar gatilhos automatizados para instalar uma aplicação simples na nuvem AWS da maneira mais automatizada possível.
 
 # Esse repositório e publico, sendo possível colaborar através de PR. 
-[![prs-badge]][prs-link] &nbsp;
+
 
 Para começar a utilizar essa proposta, existe alguns requisitos
 São eles:
@@ -39,6 +39,11 @@ A parte local esta baseado com uma aplicação simples em Python que se chama Mu
 <a href="https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/diogoab/musiclibraypagarme/dev/app/docker-compose.yml">
   <img src="https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png" alt="Try in PWD"/>
 </a>
+<b>
+
+
+
+
 Entáo, vamos começar fazendo um “fora” desse repositório pois termos alguns passo para por em produção 100%!
 
 Crie uma Branch para fazer seu desenvolvimento, e depois abrir um PR para fazer a automação rodar!
