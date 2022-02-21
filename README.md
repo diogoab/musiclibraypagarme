@@ -9,18 +9,11 @@ Para começar a utilizar essa proposta, existe alguns requisitos
 São eles:
 ## Pré-requisitos
 
-* Terraform
-* Docker
-* docker-compose
-* Conta AWS
-* AWS CLI
-
-
-
-- Terraform - https://www.terraform.io
-- Docker - https://docs.docker.com/engine/install/ubuntu/
-- AWS cli - https://docs.aws.amazon.com/pt_br/cli/latest/userguide/install-cliv2-linux.html
-- Uma Conta na AWS ativa - https://aws.amazon.com
+* Docker-compose - https://docs.docker.com/compose/install/
+* Terraform - https://www.terraform.io
+* Docker - https://docs.docker.com/engine/install/ubuntu/
+* AWS cli - https://docs.aws.amazon.com/pt_br/cli/latest/userguide/install-cliv2-linux.html
+* Uma Conta na AWS ativa - https://aws.amazon.com
 
 Esse projeto foi desenvolvido no SO Linux, mas isso não quer dizer que possa usar no Microsoft Windows, mas essa parte deixo com vc!
 

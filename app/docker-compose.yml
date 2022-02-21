@@ -8,15 +8,10 @@ services:
       - "8000:8000"
 
   webapp:
-    build:
-      dockerfile: Dockerfile-Local
-      args:
-        - REGION=us-east-1
-        - AWS_ACCESS_KEY=0
-        - AWS_SECRET_ACCESS_KEY=0
+    image: jokerdab/musiclibrarypagarme-local
     container_name: webapp
     ports:
-      - 5000:5000
+      - "5000:5000"
     environment:
       # - ENDPOINT_URL=AWS
       - ENDPOINT_URL=http://dynamodb:8000
