@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    container_name: dynamodb
+    ports:
+      - "8000:8000"
+
+  webapp:
+    image: jokerdab/musiclibrarypagarme-local
+    container_name: webapp
+    ports:
+      - "5000:5000"
+    environment:
+      # - ENDPOINT_URL=AWS
+      - ENDPOINT_URL=http://dynamodb:8000
+      - REGION=us-east-1
+      - AWS_ACCESS_KEY=0
+      - AWS_SECRET_ACCESS_KEY=0
+    links:
+      - dynamodb
+    depends_on:
+      - dynamodb
+  
+  init-dynamo:
+    image: garland/aws-cli-docker
+    command: "aws dynamodb create-table --endpoint-url http://dynamodb:8000 --table-name bestMusic --attribute-definitions AttributeName=artist,AttributeType=S AttributeName=song,AttributeType=S --key-schema AttributeName=artist,KeyType=HASH AttributeName=song,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1"
+    links:
+      - dynamodb
+    environment:
+      - AWS_ACCESS_KEY_ID=0
+      - AWS_SECRET_ACCESS_KEY=0
+      - AWS_DEFAULT_REGION=us-east-1
+    depends_on:
+      - dynamodb
