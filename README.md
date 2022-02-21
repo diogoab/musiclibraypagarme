@@ -14,95 +14,122 @@ Se não quiser instalar nada sua máquina pode apenas apertar o botão e começa
 </a>
 <b>
 
-Mas se quiser testar na sua máquina, existe alguns requisitos que são eles:
-## Pré-requisitos
+- Para destruir basta apenas fechar a sessão do PWD.
+
+## Mas se quiser testar na sua máquina, existe alguns requisitos que são eles:
+### Pré-requisitos
 
 * agent git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 * Docker - https://docs.docker.com/engine/install/ubuntu/
 * Docker-compose - https://docs.docker.com/compose/install/
 - Obs: esse projeto foi escrito no SO Linux, mas isso não quer dizer que não possa usar no Microsoft Windows, mas essa parte deixo com vc!
 
-1. Baixar os códigos 
+1. Baixar os códigos: 
 ```
 $ git clone https://github.com/diogoab/musiclibraypagarme.git
 ```
 
-2. acesse o diretório onde está a aplicação e os arquivos do docker
+2. acesse o diretório onde está a aplicação e os arquivos do docker:
 ```
 $ cd musiclibrarypagarme/app
 ```
 
-3. Construir a imagem local
+3. Construir a imagem local:
 ```
 $ docker build -t jokerdab/musiclibrarypagarme-local -f Dockerfile-Local .
 ```
 
-4. Instalar as aplicações 
+4. Instalar as aplicações: 
 ```
 $ docker-compose up -d
 ```
 
 5. Agora acesse a aplicação através do localhost:5000 e pode começar a testar, uma tela parecida com essa deve aparecer no navegador:
 
-[image]
+![Alt text](./images/app.png?raw=true "App Running")
 
+6. Para desinstalar basta apenas executar:
+```
+$ docker-compose down
+```
 
+## Nuvem
 
-
-
-Pensei em algo bem pratico para mostrar alguns recursos do Terraform, Docker e AWS
-
-Aqui esta um desenho para ilustrar essa instalação em produção
-
-[Desenho]
-
-Então vamos la 
-
-
+Para parte de nuvem pensei em algo bem prático para mostrar alguns recursos do Terraform, Docker e AWS, no entanto precisa de um "preset" para chegar no momento de instalação.
+### Pré-requisitos
 
 * Terraform - https://www.terraform.io
 * AWS cli - https://docs.aws.amazon.com/pt_br/cli/latest/userguide/install-cliv2-linux.html
 * Uma Conta na AWS ativa - https://aws.amazon.com
 
-mas de todo modeo temos que criar as variáveis para poder funcionar, enfim, vamos fazer tudo em hand-ons.
+Aqui esta um desenho para ilustrar essa instalação em Nuvem
 
-A parte local esta baseado com uma aplicação simples em Python que se chama MusicLibraryPagarME, que persiste dados usando o DynamoDB, no entanto escrevi um Docker-compose para esse cenário
+![Alt text](./images/infra-aws.png?raw=true "Infra Running")
+
+## Instalação pelo Github Actions
+
+### Preset Github Actions
+
+1. crie um repositório no github para hospedar os códigos do teste.
+
+2. Para este teste e necessario definir os valores de secrets no github para podermos executar actions: https://docs.github.com/pt/actions/security-guides/encrypted-secrets
+```
+AWS_ACCESS_KEY_ID 
+
+AWS_SECRET_ACCESS_KEY 
+
+AWS_REGION 
+
+REPO_NAME
+```
+
+### Preset Terraform e AWS
+
+1. Configurar acessos programaticos de ACCESS_KEY e SECRET_KEY execute e informe as informações:
+```
+$ aws configure
+```
+- Obs: a região que usei foi "us-west-2"
+
+2. Baixar os códigos: 
+```
+$ git clone https://github.com/diogoab/musiclibraypagarme.git
+```
+
+3. acesse o diretório onde está a aplicação e os arquivos do terraform para o preset do state:
+```
+$ cd musiclibrarypagarme/terraform/state
+```
+
+4. Inicie o terraform no diretório do state
+```
+$ terraform init
+```
+
+5. Planeje para verificar o que vai ser criado na AWS com:
+```
+$ terraform plan 
+```
+
+6. Instale o terraform preset:
+```
+$ terraform apply
+```
+7. Agora vamos navegar até a pasta do actions, retorne para a pasta com:
+```
+$ cd ../.github/workflows
+```
+8. Para criar a infraestrutura na AWS e instalar a aplicação precisamos editar o arquivo build-docker-deploy.yml e remover os comentários com "#" da linhas 83 a 87 e comentar as linhas 89 a 93 com "#" em cada linha.
+
+9. Agora faça o commit do código e push para o repositorio do github para ver a infraestrutura ser criada.
+
+10. Para destruir a infraestrutura na AWS e remover tudo precisamos editar o arquivo build-docker-deploy.yml e remover os comentários com "#" da linhas 83 a 87 e comentar as linhas 89 a 93 com "#" em cada linha.
+
+11. Agora faça o commit do código e push para o repositorio do github para ver a destruição da infraestrutura na AWS.
+
+- Obs: Se por acaso entende que precisa alterar algo na infraestrutura pode alterar no arquivos de variaveis do terraform.
 
 
-Primeiro vamos começar fazendo um “fork” desse repositório para por a mão na massa,
 
-Recomendo que mesmo com o codigo local crie uma Branch para fazer seu desenvolvimento
 
-Localmente você vai precisar do ambiente Docker preparado para conseguir rodar o projeto.
 
-[link]
-
-#
-
-#
-
-Para ambiente em produção
-
-AWS CLI
-
-Terraform
-
-Configure AWS
-
-Iniciando o terraform
-
-Planejando
-
-Aplicando
-
-Destruindo
-
-# 
-
-#
-
-#
-
-#
-
-#
