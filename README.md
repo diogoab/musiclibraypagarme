@@ -130,6 +130,10 @@ $ cd ../.github/workflows
 - Obs: Se por acaso entende que precisa alterar algo na infraestrutura pode alterar no arquivos de variaveis do terraform.
 
 
+Bom esse este modelo atende para ter minimamente uma automação para implantação na AWS apenas com push no github, recomendo para algo que vá para produção que seja os eventos de Merge entre as branchs com politicas de aceite e code review.
+
+# Thanks!
+
 
 
 
